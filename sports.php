@@ -3,6 +3,8 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 
+
+
 // from http://www.finditillinois.org/wordpress/?page_id=23
 // and https://github.com/ahbullen/CONTENTdmAPIs/blob/master/dmBrowse.php$collection = "p16014coll11";
 // $xmlData = file_get_contents('https://server16014.contentdm.oclc.org/dmwebservices/index.php?q=dmQuery/all/title^woman^all^and/title!subjec!descri/title/50/1/0/0/0/0/xml');
@@ -61,7 +63,7 @@ for ($i=0;$i<=$resultCount;$i++) {
         $thumb = $result[$i]["thumb"];
         $collection = $result[$i]["collection"];
         $collection = str_ireplace("/", "", "$collection");
-        $urlStr = "dmGetItemInfoWebPage.php?collection=$collection&pointer=$thumb";
+        $urlStr = "http://cplorg.contentdm.oclc.org/cdm/singleitem/collection/p16014coll11/id/" . $thumb . "/rec/" . $i ;
         $imgStr = "http://cplorg.contentdm.oclc.org//utils/getthumbnail/collection/$collection/id/" . $thumb;
         echo "<li><a href=\"$urlStr\"><img src=\"$imgStr\"></a> <strong>$title</strong><br /><em>$description</em><br /><p /></li>\n";
 }
