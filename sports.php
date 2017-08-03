@@ -45,6 +45,16 @@ $resultCount = count($result) - 1;
 
 ?>
 <html>
+
+<style media="screen" type="text/css">
+
+img.fooclass {
+  height: 200px;
+   width: 200px;
+}
+
+</style>
+
         <head>
                 <title>SRC - interview series </title>
         </head>
@@ -65,7 +75,7 @@ for ($i=0;$i<=$resultCount;$i++) {
         $collection = str_ireplace("/", "", "$collection");
         $urlStr = "http://cplorg.contentdm.oclc.org/cdm/singleitem/collection/p16014coll11/id/" . $thumb . "/rec/" . $i ;
         $imgStr = "http://cplorg.contentdm.oclc.org//utils/getthumbnail/collection/$collection/id/" . $thumb;
-        echo "<li><a href=\"$urlStr\"><img src=\"$imgStr\"></a> <strong>$title</strong><br /><em>$description</em><br /><p /></li>\n";
+        echo "<li><a href=\"$urlStr\"><img class=\"fooclass\" src=\"$imgStr\"></a> <strong>$title</strong><br /><em>$description</em><br /><p /></li>\n";
 }
 ?>
                         </ol>
