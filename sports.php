@@ -36,7 +36,8 @@ foreach ($xml->xpath('//record') as $record) {
                 'title' => (string) $record->title,
                 'subject' => (string) $record->subjec,
                 'descri' => (string) $record->descri,
-                'thumb' => (string) $record->pointer
+                'thumb' => (string) $record->pointer,
+                'creator' => (string) $record->creato
         );
 }
 
@@ -71,11 +72,12 @@ for ($i=0;$i<=$resultCount;$i++) {
         $subject = $result[$i]["subject"];
         $description = $result[$i]["descri"];
         $thumb = $result[$i]["thumb"];
+        $the_creator = $result[$i]["creator"];
         $collection = $result[$i]["collection"];
         $collection = str_ireplace("/", "", "$collection");
         $urlStr = "http://cplorg.contentdm.oclc.org/cdm/singleitem/collection/p16014coll11/id/" . $thumb . "/rec/" . $i ;
-        $imgStr = "http://cplorg.contentdm.oclc.org//utils/getthumbnail/collection/$collection/id/" . $thumb;
-        echo "<li><a href=\"$urlStr\"><img class=\"fooclass\" src=\"$imgStr\"></a> <strong>$title</strong><br /><em>$description</em><br /><p /></li>\n";
+        $imgStr = "http://cplorg.contentdm.oclc.org/utils/getthumbnail/collection/$collection/id/" . $thumb;
+        echo "<li><a href=\"$urlStr\"><img class=\"fooclass\" src=\"$imgStr\"></a> <strong>$title</strong><br /><em>$description</em> $the_creator <br /><p /></li>\n";
 }
 ?>
                         </ol>
