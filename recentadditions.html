@@ -27,7 +27,7 @@ https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html 
 <p class="doggos"> </div>
 
 <script>
-const CONTENTDM_SOURCE = "https://server16014.contentdm.oclc.org/digital/bl/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json";
+const CONTENTDM_SOURCE = "https://sheltered-temple-69261.herokuapp.com/cdm16014.contentdm.oclc.org/digital/bl/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json";
 
 const LOCAL_SOURCE = "./recentadditions.json";
 
@@ -36,11 +36,11 @@ fetch(CONTENTDM_SOURCE)
     return response.json();
   })
   .then(function(myJson) {
-  console.log(myJson.records[2].title); // WORKS
-    myJson.forEach(function(myArgument) {
-  	 console.log(myArgument.pointer); 	
-          })	
-          //console.log(myJson.records[2].title); 
+  console.log(myJson.records[4].title); // WORKS
+    // myJson.forEach(function(myArgument) {
+  	 // console.log(myArgument.pointer); 	
+    //       })	
+  console.log(myJson.records[2].title); 
   });
 
 // console.log(LOCAL_SOURCE);
