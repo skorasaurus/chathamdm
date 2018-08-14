@@ -36,12 +36,10 @@ fetch(CONTENTDM_SOURCE)
     return response.json();
   })
   .then(function(myJson) {
-  console.log(myJson.records[4].title); // WORKS
-    // myJson.forEach(function(myArgument) {
-  	 // console.log(myArgument.pointer); 	
-    //       })	
-  console.log(myJson.records[2].title); 
-  });
+ for(var i = 0; i < myJson.records.length; i++) {
+    console.log(myJson.records[i].title); 
+    }
+ });
 
 // console.log(LOCAL_SOURCE);
 
