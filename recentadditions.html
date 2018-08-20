@@ -31,22 +31,29 @@ const CONTENTDM_SOURCE = 'https://sheltered-temple-69261.herokuapp.com/cdm16014.
 
 const LOCAL_SOURCE = './recentadditions.json';
 
-const cdmSelector = document.getElementsByClassName('cdm');
+const cdmSelector = document.querySelector('.cdm');
 
 
-// const htmlList = document.createElement('ul'); 
-// cdmSelector.appendChild(htmlList); 
+const htmlList = document.createElement('ul'); 
+cdmSelector.appendChild(htmlList); 
 
+const baseURL = 'https://cplorg.contentdm.oclc.org/digital/collection/p4014coll24/id/'; 
 
 fetch(CONTENTDM_SOURCE)
   .then(function(response) {
     return response.json();
   })
   .then(function(myJson) {
- for(var i = 0; i < myJson.records.length; i++) {
-    console.log(myJson.records[i].title); 
-    // var listItem = document.createElement('li'); 
-    // htmlList.appendChild(listItem);
+    for(var i = 0; i < myJson.records.length; i++) {
+      console.log(myJson.records[i].title); 
+        var listItem = document.createElement('li'); 
+        htmlList.appendChild(listItem);
+        var theLink = document.createElement('a');
+        listItem.appendChild(theLink);
+        theLink.href = baseURL + myJson.records[i].pointer;
+        theLink.textContent = myJson.records[i].title; 
+
+        // append the creator text
     }
  });
 
