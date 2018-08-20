@@ -24,12 +24,19 @@ also:
 The SSL certificate used to load resources from https://server16014.contentdm.oclc.org will be distrusted in M70. Once distrusted, users will be prevented from loading these resources. See https://g.co/chrome/symantecpkicerts for more information.
 https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html -->
 
-<p class="doggos"> </div>
+<p class="cdm"> </p>
 
 <script>
-const CONTENTDM_SOURCE = "https://sheltered-temple-69261.herokuapp.com/cdm16014.contentdm.oclc.org/digital/bl/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json";
+const CONTENTDM_SOURCE = 'https://sheltered-temple-69261.herokuapp.com/cdm16014.contentdm.oclc.org/digital/bl/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json';
 
-const LOCAL_SOURCE = "./recentadditions.json";
+const LOCAL_SOURCE = './recentadditions.json';
+
+const cdmSelector = document.getElementsByClassName('cdm');
+
+
+// const htmlList = document.createElement('ul'); 
+// cdmSelector.appendChild(htmlList); 
+
 
 fetch(CONTENTDM_SOURCE)
   .then(function(response) {
@@ -38,14 +45,10 @@ fetch(CONTENTDM_SOURCE)
   .then(function(myJson) {
  for(var i = 0; i < myJson.records.length; i++) {
     console.log(myJson.records[i].title); 
+    // var listItem = document.createElement('li'); 
+    // htmlList.appendChild(listItem);
     }
  });
-
-// console.log(LOCAL_SOURCE);
-
-  // foreach 
-  // var fff = document.createElement("a");
-  // fff.textContent = LOCAL_SOURCE.title; 
 
 
 
