@@ -34,7 +34,7 @@ border: 3px solid black;
 
 
   <meta charset="UTF-8'">
-    <title>Recent Additions to a collection</title>
+    <title>Recent Additions to CPL Photograph collection</title>
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
 </head>
@@ -60,7 +60,6 @@ https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html 
 
 <p class="cdm"> </p>
 
-also: <a href="https://codepen.io/gapcode/pen/pyojPd"> this test from codepen </a>
 
 <script>
 var CONTENTDM_SOURCE = 'https://sheltered-temple-69261.herokuapp.com/cdm16014.contentdm.oclc.org/digital/bl/dmwebservices/index.php?q=dmGetRecent/p4014coll18/20/title!creato!descri/0/0/json';
@@ -69,6 +68,8 @@ var LOCAL_SOURCE = './recentadditions.json';
 
 var cdmSelector = document.querySelector('.cdm');
 
+// create a list of items; each list item contains:
+// url to view said item (baseURL), thumbnail of the item (thumbURL)
 
 var htmlList = document.createElement('ul'); 
 cdmSelector.appendChild(htmlList); 
