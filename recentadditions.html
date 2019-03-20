@@ -3,32 +3,45 @@
 <head>
 
 <style> 
+
+
 .cdm ul {
 display: flex;
-flex-flow: row wrap; 
+flex-flow: wrap; 
 justify-content: center; 
 align-items: center; 
 padding: 0 0 4em 0;
 }
 
+.cdm img {
+  justify-content: center;
+  display: flex;
+  padding: 2em;
+}
+
+
+
+
 li {
+list-style: none;
 flex-basis: 400px;
-height: 500px; 
-padding: 30px; 
+height: 300px; 
+padding: 2em;
+border: 3px solid black; 
 }
 
 </style>
 
 
-	<meta charset="UTF-8'">
-		<title>Recent Additions to a collection</title>
+  <meta charset="UTF-8'">
+    <title>Recent Additions to a collection</title>
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
 </head>
 <body>
 
 <!-- displays recent 20 items to map collection; with title and 
-https://server16014.contentdm.oclc.org/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json -->	
+https://server16014.contentdm.oclc.org/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json --> 
 
 
 <!-- in firefox 
@@ -42,6 +55,8 @@ Failed to load https://server16014.contentdm.oclc.org/dmwebservices/index.php?q=
 also:
 The SSL certificate used to load resources from https://server16014.contentdm.oclc.org will be distrusted in M70. Once distrusted, users will be prevented from loading these resources. See https://g.co/chrome/symantecpkicerts for more information.
 https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html -->
+
+<h1> Recently Added Items to Cleveland Public Library's Digital Map Collection </h1>
 
 <p class="cdm"> </p>
 
@@ -62,48 +77,22 @@ var baseURL = 'https://cplorg.contentdm.oclc.org/digital/collection/p4014coll24/
 
 var thumbURL = 'http://cdm16014.contentdm.oclc.org/utils/getthumbnail/collection/p4014coll24/id/'; 
 
-
-var makeRequest = function (url, method) {
-
-  // Create the XHR request
-  var request = new XMLHttpRequest();
-
-  // Return it as a Promise
-  return new Promise(function (resolve, reject) {
-
-    // Setup our listener to process compeleted requests
-    request.onreadystatechange = function () {
-
-      // Only run if the request is complete
-      if (request.readyState !== 4) return;
-
-      // Process the response
-      if (request.status >= 200 && request.status < 300) {
-        // If successful
-        resolve(request);
+// function to get verbose errors since fetch isn't explicit
+var handleResponse = function (theResponse) {
+  return theResponse.json()
+    .then(function (json) {
+      if (theResponse.ok) {
+        return json;
       } else {
-        // If failed
-        reject({
-          status: request.status,
-          statusText: request.statusText
-        });
+        return Promise.reject(theResponse);
       }
-
-    };
-
-    // Setup our HTTP request
-    request.open(method || 'GET', url, true);
-
-    // Send the request
-    request.send();
-
-  });
+    });
 };
 
-// https://gomakethings.com/promise-based-xhr/
-makeRequest(CONTENTDM_SOURCE)
-  .then(function (myJson) {
-    console.log(myJson);
+
+fetch(CONTENTDM_SOURCE)
+  .then(handleResponse)
+  .then(function(myJson) {
     for(var i = 0; i < myJson.records.length; i++) {
       console.log(myJson.records[i].title); 
         var listItem = document.createElement('li'); 
@@ -117,36 +106,11 @@ makeRequest(CONTENTDM_SOURCE)
         theImage.src = thumbURL + myJson.records[i].pointer; 
     }
         // append the creator text
-  })
-
-  .catch(function (error) {
-    console.log('Something went wrong', error);
   });
 
+        // append the creator text
+    
 
-
-
-
-// fetch(CONTENTDM_SOURCE)
-//   .then(function(response) {
-//     return response.json();
-//   })
-  // .then(function(myJson) {
-  //   for(var i = 0; i < myJson.records.length; i++) {
-  //     console.log(myJson.records[i].title); 
-  //       var listItem = document.createElement('li'); 
-  //       htmlList.appendChild(listItem);
-  //       var theLink = document.createElement('a');
-  //       listItem.appendChild(theLink);
-  //       theLink.href = baseURL + myJson.records[i].pointer;
-  //       theLink.textContent = myJson.records[i].title;
-  //       var theImage = document.createElement('img');
-  //       theLink.appendChild(theImage); 
-  //       theImage.src = thumbURL + myJson.records[i].pointer; 
-
-  //       // append the creator text
-  //   }
-//  });
 
 // promise
 //   .then(function(response) {
@@ -155,8 +119,8 @@ makeRequest(CONTENTDM_SOURCE)
 //   })
 //   .then(function(processedResponse) {
 //     var  = document.createElement("p");
-//    	thePointer = processedResponse.records.pointer;
-//    	console.log(thePointer);
+//      thePointer = processedResponse.records.pointer;
+//      console.log(thePointer);
 //     doggos.appendChild(p);
 //   });
 
