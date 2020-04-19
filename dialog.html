@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recent Additions to a collection</title>
+</head>
+<style type="text/css" media="screen">
+
+.parent {
+  border: 2px solid #0074d9;
+  color: #0074d9;
+  padding: 20px;
+}
+
+.element {
+  border: 1px dotted #000;
+  background-color: #eee;
+  padding: 20px;
+  color: #000;
+}
+
+* Necessary styling for the dialog to work
+ * -------------------------------------------------------------------------- */
+
+/**
+ * When `<dialog>` is properly supported, the overlay is implied and can be
+ * styled with `::backdrop`, which means the DOM one should be removed.
+ */
+[data-a11y-dialog-native] .dialog-overlay {
+  display: none;
+}
+
+/**
+ * When `<dialog>` is not supported, its default display is `inline` which can
+ * cause layout issues.
+ */
+dialog[open] {
+  display: block;
+}
+
+.dialog[aria-hidden="true"] {
+  display: none;
+}
+
+/* -------------------------------------------------------------------------- *\
+ * Styling to make the dialog look like a dialog
+ * -------------------------------------------------------------------------- */
+
+.dialog-overlay {
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.66);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.66);
+}
+
+.dialog-content {
+  background-color: rgb(255, 255, 255);
+  z-index: 3;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------- *\
+ * Extra dialog styling to make it shiny
+ * -------------------------------------------------------------------------- */
+
+@keyframes fade-in {
+  from { opacity: 0;  }
+  to { opacity: 1;  }
+}
+
+@keyframes appear {
+  from { transform: translate(-50%, -40%); opacity: 0; }
+  to { transform: translate(-50%, -50%); opacity: 1; }
+}
+
+.dialog:not([aria-hidden='true']) > .dialog-overlay {
+  animation: fade-in 200ms 1 both;
+}
+
+.dialog:not([aria-hidden='true']) > .dialog-content {
+  animation: appear 400ms 150ms 1 both;
+}
+
+.dialog-content {
+  padding: 1em;
+  max-width: 90%;
+  width: 600px;
+  border-radius: 2px;
+}
+
+
+@media screen and (min-width: 700px) {
+  .dialog-content {
+    padding: 2em;
+  }
+}
+
+.dialog-overlay {
+  background-color: rgba(43, 46, 56, 0.9);
+}
+
+.dialog h1 {
+  margin: 0;
+  font-size: 1.25em;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 1.25em;
+  width: 1.2em;
+  height: 1.2em;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+@media screen and (min-width: 700px) {
+  .dialog-close {
+    top: 1em;
+    right: 1em;
+  }
+}
+
+</style>
+
+<div class="parent">
+Parent element</div>
+<div class="element">Child element</div>
+
+<div class="main" id="main" aria-label="Content">
+the main content of the page 
+
+<button data-a11y-dialog-show="my-accessible-dialog">click me </button>
+
+<section class="container">
+
+</section>
+
+<!-- -->
+<div class="dialog" id="my-accessible-dialog">
+        <div class="dialog-overlay" tabindex="-1" data-a11y-dialog-hide></div>
+        <dialog class="dialog-content" aria-labelledby="dialogTitle" aria-describedby="dialogDescription">
+          <button data-a11y-dialog-hide class="dialog-close" aria-label="Close this dialog window">&times;</button>
+
+          <h1 id="dialogTitle">Subscribe to ESPI Newsletter</h1>
+
+          <p id="dialogDescription">Fill in the ridiculously small form below to receive our ridiculously cool newsletter!</p>
+
+           <!-- my form!-->
+                <form role="search" method="get" class="search-form" id=""
+                action="">
+                <span class="screen-reader-text">screen-reader-text </span>
+                <input type="search" required class="search-field" placeholder=""> 
+
+                <section class="radio-buttons-section">
+                <h3 class="screen-reader-text">Search the library's:</h3>
+                <fieldset>
+                    <legend>Search CPL by: </legend>
+                    <div class="radio row">
+                    <input type="radio" name="search-form-source" id="catalog" value="catalog"/>
+                    <label for="catalog">Catalog</label>
+                    <input type="radio" name="search-form-source" id="overdrive" value="overdrive"/>
+                    <label for="overdrive">Ebooks</label>
+                    <input type="radio" name="search-form-source" id="digitalgallery" value="digitalgallery"/>
+                    <label for="digitalgallery">Digital Gallery</label>
+                    <input type="radio" name="search-form-source" id="cpl-dot-org" value="cpl-dot-org"/>
+                    <label for="cpl-dot-org">website</label>
+                    </div>
+                </fieldset>
+                </section>
+                <input class="cpl-button cpl-button-search" value=" " name="search" alt="Search" type="submit" />
+                </form>
+
+</dialog>
+    
+
+<div class="search-container"> </div>
+<script type="text/javascript" src="a11y-dialog.min.js"></script>
+
+    <script>
+    console.log("this will log first");
+
+    // from http://edenspiekermann.github.io/a11y-dialog/example/
+    (function () {
+      document.addEventListener('DOMContentLoaded', function () {
+        var dialogEl = document.getElementById('my-accessible-dialog');
+        var mainEl = document.getElementById('main');
+        var dialog = new window.A11yDialog(dialogEl, mainEl);
+
+        dialog.on('show', function (dialogEl, triggerEl) {
+          console.log(dialogEl);
+          console.log(triggerEl);
+        });
+
+        // To manually control the dialog:
+        // dialog.show()
+        // dialog.hide()
+        // dialog.destroy()
+      });
+    }());
+</script>
+
+</div> <!-- main div -->
+</html>
