@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8'">
+<title>Recent Additions to CPL Digital Photograph Collection</title>
+
+<style> 
+.cdm ul {
+  display: flex;
+  flex-flow: row wrap; 
+  align-items: center; 
+  padding: 0 0 4em 0;
+}
+
+
+.cdm li {
+  list-style: none;
+  flex-basis: 300px;
+  height: 300px; 
+  padding: 2em;
+  border: 0.25em solid black; 
+  margin-top: -.25em;
+  margin-left: -.25em;
+  overflow: hidden;
+}
+
+.cdm img {
+  justify-content: center;
+  display: flex;
+  padding: 2em;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
+</head>
+<body>
+
+<!-- displays recent 20 items to map collection; with title and 
+https://server16014.contentdm.oclc.org/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json --> 
+
+<h1> Recently Added Items to Cleveland Public Library's Digital Photograph Collection of Cleveland</h1>
+
+<p class="cdm"> </p>
+
+
+<script>
+var CONTENTDM_SOURCE = 'https://sheltered-temple-69261.herokuapp.com/cdm16014.contentdm.oclc.org/digital/bl/dmwebservices/index.php?q=dmGetRecent/p4014coll18/21/title!creato!descri/0/0/json';
+
+var LOCAL_SOURCE = './recentadditions.json';
+
+var cdmSelector = document.querySelector('.cdm');
+
+
+// url to view said item (baseURL), thumbnail of the item (thumbURL)
+
+var htmlList = document.createElement('ul'); 
+cdmSelector.appendChild(htmlList); 
+
+var baseURL = 'https://cplorg.contentdm.oclc.org/digital/collection/p4014coll18/id/'; 
+
+var thumbURL = 'http://cdm16014.contentdm.oclc.org/utils/getthumbnail/collection/p4014coll18/id/'; 
+
+// function to get verbose errors since fetch isn't explicit
+var handleResponse = function (theResponse) {
+  return theResponse.json()
+    .then(function (json) {
+      if (theResponse.ok) {
+        return json;
+      } else {
+        return Promise.reject(theResponse);
+      }
+    });
+};
+
+// result means a unique item in the contentdm collection;
+
+// example: https://cplorg.contentdm.oclc.org/digital/collection/p4014coll18/id/8658
+
+
+/* create a list item for each result from the json, each contains:
+
+title of the result, hyperlinked to the result in the collection
+thumbnail of the result, hyperlinked to the result in the collection
+new paragraph containing description of the result 
+*/
+
+fetch(CONTENTDM_SOURCE)
+  .then(handleResponse)
+  .then(function(myJson) {
+    for(var i = 0; i < myJson.records.length; i++) {
+      console.log(myJson.records[i].title); 
+        var listItem = document.createElement('li'); 
+        htmlList.appendChild(listItem);
+        var theLink = document.createElement('a');
+        listItem.appendChild(theLink);
+        theLink.href = baseURL + myJson.records[i].pointer;
+        theLink.textContent = myJson.records[i].title;
+        var theImage = document.createElement('img');
+        theLink.appendChild(theImage);
+        theImage.src = thumbURL + myJson.records[i].pointer; 
+        theImage.alt = myJson.records[i].descri;
+        var theDescription = document.createElement('p');
+        listItem.appendChild(theDescription);
+        console.log(myJson.records[i].descri);
+        theDescription.textContent = myJson.records[i].descri; 
+        // theDescription.textContent = "HI MOM!";
+
+        // append the creator text
+    }
+ });
+
+
+console.log("this will log first");
+</script>
+</body>
+</html>
