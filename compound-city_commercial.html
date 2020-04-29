@@ -15,7 +15,6 @@
 
 .cdm li {
   list-style: none;
-  flex-basis: 300px;
   height: 300px; 
   padding: 2em;
   border: 0.25em solid black; 
@@ -27,7 +26,6 @@
 .cdm img {
   justify-content: center;
   display: flex;
-  padding: 2em;
 }
 
 </style>
@@ -37,15 +35,30 @@
 </head>
 <body>
 
-<!-- Goal: display all --> 
+<!-- Goal: display Display compound objects like the city planning slides: as a gallery; --> 
 
 <h1>City Planning Commission Slide Collection</h1>
-<p>These are from the City Planning Commission Slide Collection at the Cleveland Public Library's digital photograph collection<p>. 
+<p>These photographs are from the City Planning Commission Slide Collection at the Cleveland Public Library's digital photograph collection<p>. 
 
 <p class="cdm"> </p>
 
 
 <script>
+
+// todo; 
+// create a couple buttons that will load photos in groups of 50
+// on initial page load, create all of the buttons; 
+// 
+
+// fetch(CONTENTDM_SOURCE)
+//   .then(handleResponse)
+//   then(function(myJson) {
+//    for(var i = 0; i < myJson.page.length; i++) {
+// for each 50, create a new button 
+
+// then make a second fetch once the button is pressed, to determine 
+// which 50 of the photos should be loaded. 
+
 var CONTENTDM_SOURCE = 'https://sheltered-temple-69261.herokuapp.com/cdm16014.contentdm.oclc.org/digital/bl/dmwebservices/index.php?q=dmGetCompoundObjectInfo/p16014coll6/17538/json';
 
 var LOCAL_SOURCE = './recentadditions.json';
@@ -60,7 +73,7 @@ cdmSelector.appendChild(htmlList);
 
 var baseURL = 'https://cplorg.contentdm.oclc.org/digital/collection/p16014coll6/id/'; 
 
-var thumbURL = 'http://cdm16014.contentdm.oclc.org/utils/getthumbnail/collection/p16014coll6/id/'; 
+var thumbURL = ' http://cdm16014.contentdm.oclc.org/digital/iiif/p16014coll6/'; 
 
 // function to get verbose errors since fetch isn't explicit
 var handleResponse = function (theResponse) {
@@ -74,7 +87,7 @@ var handleResponse = function (theResponse) {
     });
 };
 
-// 
+
 
 // example: https://cplorg.contentdm.oclc.org/digital/collection/p4014coll18/id/8658
 
@@ -86,10 +99,11 @@ thumbnail of the result, hyperlinked to the result in the collection
 new paragraph containing description of the result 
 */
 
+// replace myJson.page.length with 51
 fetch(CONTENTDM_SOURCE)
   .then(handleResponse)
   .then(function(myJson) {
-    for(var i = 0; i < myJson.page.length; i++) {
+    for(var i = 0; i < 51 ; i++) {
       console.log(myJson.page[i].title); 
         var listItem = document.createElement('li'); 
         htmlList.appendChild(listItem);
@@ -99,7 +113,7 @@ fetch(CONTENTDM_SOURCE)
         theLink.textContent = myJson.page[i].title;
         var theImage = document.createElement('img');
         theLink.appendChild(theImage);
-        theImage.src = thumbURL + myJson.page[i].pageptr; 
+        theImage.src = thumbURL + myJson.page[i].pageptr + '/full/,300/0/default.jpg' ; 
         theImage.alt = myJson.page[i].descri;
         var theDescription = document.createElement('p');
         listItem.appendChild(theDescription);
