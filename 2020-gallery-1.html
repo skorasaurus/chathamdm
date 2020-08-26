@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<style> 
+
+
+.cdm ul {
+display: flex;
+flex-flow: wrap; 
+justify-content: center; 
+align-items: center; 
+padding: 0 0 4em 0;
+}
+
+.cdm img {
+  justify-content: center;
+  display: flex;
+  padding: 2em;
+  max-width: 300px; 
+
+}
+
+
+
+
+li {
+list-style: none;
+flex-basis: 400px;
+height: 300px; 
+padding: 2em;
+border: 3px solid black; 
+}
+
+</style>
+
+
+  <meta charset="UTF-8'">
+    <title>Gallery, page One</title>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
+</head>
+<body>
+
+<!-- in firefox 
+both locally and on when uploaded to skorasaur.us and using CONTENTDM_SOURCE I get:  -->
+
+<!-- Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://server16014.contentdm.oclc.org/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json. (Reason: CORS header ‘Access-Control-Allow-Origin’ missing). -->
+
+<!-- in chrome, on both skorasaur.us and localhost, I Got:
+Failed to load https://server16014.contentdm.oclc.org/dmwebservices/index.php?q=dmGetRecent/p4014coll24/20/title!creato/0/0/json: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://skorasaur.us' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+
+also:
+The SSL certificate used to load resources from https://server16014.contentdm.oclc.org will be distrusted in M70. Once distrusted, users will be prevented from loading these resources. See https://g.co/chrome/symantecpkicerts for more information.
+https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html -->
+
+<h1 class="screen-reader-text">Figure out what to put here</h1>
+
+<p class="cdm"> </p>
+
+also: <a href="https://codepen.io/gapcode/pen/pyojPd"> this test from codepen </a>
+
+<script>
+var CONTENTDM_SOURCE = 'https://cdm16014.contentdm.oclc.org/iiif/info/p4014coll10/1294/manifest.json';
+
+var LOCAL_SOURCE = './manifest.json';
+
+var cdmSelector = document.querySelector('.cdm');
+
+
+var htmlList = document.createElement('ul'); 
+cdmSelector.appendChild(htmlList); 
+
+var baseURL = 'https://cplorg.contentdm.oclc.org/digital/collection/p4014coll24/id/'; 
+
+var thumbURL = 'http://cdm16014.contentdm.oclc.org/utils/getthumbnail/collection/p4014coll24/id/'; 
+
+// function to get verbose errors since fetch isn't explicit
+var handleResponse = function (theResponse) {
+  return theResponse.json()
+    .then(function (json) {
+      if (theResponse.ok) {
+        return json;
+      } else {
+        return Promise.reject(theResponse);
+      }
+    });
+};
+
+// i < myJson.sequences[0].canvases.length
+// for page "https://cdm16014.contentdm.oclc.org/digital/iiif/p4014coll10/1295/full/full/0/default.jpg"
+
+fetch(LOCAL_SOURCE)
+  .then(handleResponse)
+  .then(function(myJson) {
+    console.log(myJson.label);
+    console.log('metadata' + myJson.metadata[1].label);
+    console.log(myJson.sequences[0].canvases[0].images[0]);
+    console.log(myJson.sequences[0].canvases[2].images[0].resource["@id"]);
+    console.log(myJson.sequences[0].canvases[5].images[0].resource);
+    console.log(myJson.sequences[0].canvases[5].label);
+    console.log(myJson.sequences[0].canvases[5].images[0].resource.service.width);
+    console.log(myJson.sequences[0].canvases[0].images[0].resource.service.height);
+    console.log(myJson.sequences[0].canvases.length);
+    for(var i = 6; i < 14 ; i++) {
+       console.log(myJson.sequences[0].canvases[i]); 
+        var listItem = document.createElement('li'); 
+        htmlList.appendChild(listItem);
+        var theLink = document.createElement('a');
+        listItem.appendChild(theLink);
+        theLink.href = myJson.sequences[0].canvases[i].images[0].resource["@id"];
+        console.log('the image url ' + myJson.sequences[0].canvases[i].images[0].resource["@id"]);
+        theLink.textContent = myJson.sequences[0].canvases[i].label;
+        var theImage = document.createElement('img');
+        theLink.appendChild(theImage); 
+        theImage.src = myJson.sequences[0].canvases[i].images[0].resource["@id"]; 
+    }
+        // append the creator text
+  });
+
+        // append the creator text
+    
+
+
+// promise
+//   .then(function(response) {
+//     var processingPromise = response.json();
+//     return processingPromise;
+//   })
+//   .then(function(processedResponse) {
+//     var  = document.createElement("p");
+//      thePointer = processedResponse.sequences.pointer;
+//      console.log(thePointer);
+//     doggos.appendChild(p);
+//   });
+
+console.log("this will log first");
+
+
+
+</script>	
+
+
+</body>
+</html>
