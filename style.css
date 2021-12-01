@@ -51,12 +51,17 @@ body {
 	 background-image: linear-gradient(to bottom, rgba(0,0,0,0), black),
 	url(https://www.placecage.com/1620/1800);
 	height: clamp(200px, 30vh, 600px);
+	overflow: hidden;
+	@media (min-width: 768px) {
+
+	}
   }
 
   
-  .container__post_title {
+  .container__post_title a {
    color: #f2f1f1; 
    font-size: 1.75em; 
    padding: .5em;
    font-family: "Roboto";
+   text-decoration: none;
   }
