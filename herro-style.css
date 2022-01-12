@@ -3,6 +3,36 @@
 	src: url('WorkSans-Medium-subset.woff2') format('woff2'), url('WorkSans-Medium-subset.woff') format('woff');
 }
 
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
+.screen-reader-text:hover,
+.screen-reader-text:active,
+.screen-reader-text:focus {
+	background-color: #f1f1f1;
+	border-radius: 3px;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	clip: auto !important;
+	color: #21759b;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000; /* Above WP toolbar */
+}
+
+
 body {
 	background: #222;
 	color: white;
@@ -14,14 +44,7 @@ body {
 	padding: 1rem;
   }
 
-  .container--outer {
-    display: grid;
-	grid-template-columns: 1fr;
-    /* // grid-gap: 0em .85em; */
-    padding: 1em;
 
-
-  }
 
   img {
 	  display: block; 
@@ -30,56 +53,50 @@ body {
   }
 
 
+  /* make a more specific rule eventually*/
+  li a {
+	  text-decoration: none;
+  }
+
+
+.container--outer {
+	display: grid;
+	grid-template-columns: 1fr;
+    /* // grid-gap: 0em .85em; */
+    padding: 1em;
+	list-style-type: none;
+}
+
 @media (min-width: 768px) {
 	.container--outer {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
-		.container--hibox {
-
-		} 
-	
-	
-	}
+}
 
 
   .container--hibox {
 	display: grid; 
-	grid-template: "container"; 
+	grid-template-columns: 1fr; 
+	grid-template-rows: 1fr; 
+	/* grid-template: "container"; 
 	place-items: center; 
-	place-content: end center; 
+	place-content: end center;  */
 	overflow: hidden; 
 	/* width: clamp(300px, 50%, 33%);  */
 	height: clamp(250px, 30vh, 600px);
   }
 
-  .container--hibox img {
-		display: none;
-  }
-	@media screen and (min-width: 500px) {
-		.container--hibox img {
-			display: block;
-	  }
-	}
-  }
   
-  #container__image-size1 {
-	 background-image: linear-gradient(to bottom, rgba(0,0,0,0), black);
-	  }
-	  
-  #container__image-size2 {
-	 background-image: linear-gradient(to bottom, rgba(0,0,0,0), black); 
-  }
-  #container__image-size3 {
-	 background-image: linear-gradient(to bottom, rgba(0,0,0,0), black);
-
-	}
+  .container__post_title, .container--hibox > img {
+	  grid-column: 1;
+	  grid-row: 1; 
   }
 
-  
-  .container__post_title a {
+  .container__post_title {
    color: #f2f1f1; 
    font-size: 1.75em; 
-   padding: .5em;
-   font-family: "Roboto";
-   text-decoration: none;
+   padding: .75em;
+   background-image: linear-gradient(to bottom, rgba(0,0,0,0), black);
+   display: flex;
+   align-self: flex-end;
   }
