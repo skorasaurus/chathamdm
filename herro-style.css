@@ -71,6 +71,10 @@ body {
 	.container--outer {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
+
+	.container--hibox {
+		height: clamp(250px, 30vh, 600px);
+	}
 }
 
 
@@ -83,7 +87,7 @@ body {
 	place-content: end center;  */
 	overflow: hidden; 
 	/* width: clamp(300px, 50%, 33%);  */
-	height: clamp(250px, 30vh, 600px);
+	
   }
 
   
@@ -99,4 +103,9 @@ body {
    background-image: linear-gradient(to bottom, rgba(0,0,0,0), black);
    display: flex;
    align-self: flex-end;
+  }
+
+  a:focus .container__post_title, 
+  a:hover .container__post_title {
+	  opacity: 1; 
   }
